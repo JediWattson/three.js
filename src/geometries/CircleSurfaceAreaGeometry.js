@@ -105,7 +105,7 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 
 	for ( i = 1; i <= segments; i ++ ) {
 
-		indices.push( i, i + 1, z );
+		indices.push( i, i + 1, 10);
 
 	}
 	}
