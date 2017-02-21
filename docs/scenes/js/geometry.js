@@ -402,7 +402,7 @@ var guis = {
 		generateGeometry();
 
 	},
-
+	
 	CircleGeometry : function( mesh ) {
 
 		var data = {
@@ -428,6 +428,38 @@ var guis = {
 		folder.add( data, 'segments', 0, 128 ).step( 1 ).onChange( generateGeometry );
 		folder.add( data, 'thetaStart', 0, twoPi ).onChange( generateGeometry );
 		folder.add( data, 'thetaLength', 0, twoPi ).onChange( generateGeometry );
+
+		generateGeometry();
+
+	},
+	
+	CircleSurfaceAreaGeometry : function( mesh ) {
+
+		var data = {
+			radius : 10,
+			segments : 32,
+			thetaStart : 0,
+			thetaLength : twoPi,
+			exponent : 2
+		};
+
+		function generateGeometry() {
+
+			updateGroupGeometry( mesh,
+				new THREE.CircleSurfaceAreaGeometry(
+					data.radius, data.segments, data.thetaStart, data.thetaLength, data.exponent
+				)
+			);
+
+		}
+
+		var folder = gui.addFolder( 'THREE.CircleSurfaceAreaGeometry' );
+
+		folder.add( data, 'radius', 1, 20 ).onChange( generateGeometry );
+		folder.add( data, 'segments', 0, 128 ).step( 1 ).onChange( generateGeometry );
+		folder.add( data, 'thetaStart', 0, twoPi ).onChange( generateGeometry );
+		folder.add( data, 'thetaLength', 0, twoPi ).onChange( generateGeometry );
+		folder.add( data, 'exponent', 0, 3 ).onChange( generateGeometry );
 
 		generateGeometry();
 
