@@ -39,7 +39,7 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 
 	BufferGeometry.call( this );
 
-	this.type = 'CircleBufferGeometry';
+	this.type = 'CircleCircleSurfaceAreaBufferGeometry';
 
 	this.parameters = {
 		radius: radius,
@@ -48,7 +48,7 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 		thetaLength: thetaLength,
 		exponent: exponent
 	};
-
+	exponent = 2
 	radius = radius || 50;
 	segments = segments !== undefined ? Math.max( 3, segments ) : 8;
 
