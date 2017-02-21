@@ -72,28 +72,32 @@ function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
 	normals.push( 0, 0, 1 );
 	uvs.push( 0.5, 0.5 );
 
-	for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
+	for (z = -10; z < 10; z++){	
+		vertex.z = z;
+		radius = z*z;
+		for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
 
-		var segment = thetaStart + s / segments * thetaLength;
+			var segment = thetaStart + s / segments * thetaLength;
 
-		// vertex
+			// vertex
 
-		vertex.x = radius * Math.cos( segment );
-		vertex.y = radius * Math.sin( segment );
+			vertex.x = radius * Math.cos( segment );
+			vertex.y = radius * Math.sin( segment );
 
-		vertices.push( vertex.x, vertex.y, vertex.z );
+			vertices.push( vertex.x, vertex.y, vertex.z );
 
-		// normal
+			// normal
 
-		normals.push( 0, 0, 1 );
+			normals.push( 0, 0, 1 );
 
-		// uvs
+			// uvs
 
-		uv.x = ( vertices[ i ] / radius + 1 ) / 2;
-		uv.y = ( vertices[ i + 1 ] / radius + 1 ) / 2;
+			uv.x = ( vertices[ i ] / radius + 1 ) / 2;
+			uv.y = ( vertices[ i + 1 ] / radius + 1 ) / 2;
 
-		uvs.push( uv.x, uv.y );
+			uvs.push( uv.x, uv.y );
 
+		}
 	}
 
 	// indices
