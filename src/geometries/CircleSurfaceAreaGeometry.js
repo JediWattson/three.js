@@ -73,6 +73,9 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 	vertices.push( 0, 0, 0 );
 	normals.push( 0, 0, 1 );
 	uvs.push( 0.5, 0.5 );
+	for (z = -10; z < 10; z++){	
+		vertex.z = z;
+		radius = z**exponent + 20;
 		for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
 
 			var segment = thetaStart + s / segments * thetaLength;
@@ -97,7 +100,6 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 
 		}
 	
-
 	// indices
 
 	for ( i = 1; i <= segments; i ++ ) {
@@ -105,7 +107,7 @@ function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, th
 		indices.push( i, i + 1, 0 );
 
 	}
-
+	}
 	// build geometry
 
 	this.setIndex( indices );
