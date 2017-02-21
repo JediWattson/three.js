@@ -495,7 +495,7 @@ THREE.MMDLoader.prototype.createMesh = function ( model, texturePath, onProgress
 
 	var scope = this;
 	var geometry = new THREE.BufferGeometry();
-	var material = new THREE.MultiMaterial();
+	var materials = [];
 	var helper = new THREE.MMDLoader.DataCreationHelper();
 
 	var buffer = {};
@@ -1118,7 +1118,6 @@ THREE.MMDLoader.prototype.createMesh = function ( model, texturePath, onProgress
 
 			if ( p.name !== undefined ) m.name = p.name;
 
-			m.skinning = geometry.bones.length > 0 ? true : false;
 			m.morphTargets = geometry.morphTargets.length > 0 ? true : false;
 			m.lights = true;
 			m.side = ( model.metadata.format === 'pmx' && ( p2.flag & 0x1 ) === 1 ) ? THREE.DoubleSide : p.side;
@@ -1330,7 +1329,7 @@ THREE.MMDLoader.prototype.createMesh = function ( model, texturePath, onProgress
 
 			}
 
-			material.materials.push( m );
+			materials.push( m );
 
 		}
 
@@ -1354,7 +1353,7 @@ THREE.MMDLoader.prototype.createMesh = function ( model, texturePath, onProgress
 
 					}
 
-					var m = material.materials[ e.index ];
+					var m = materials[ e.index ];
 
 					if ( m.opacity !== e.diffuse[ 3 ] ) {
 
@@ -1499,7 +1498,7 @@ THREE.MMDLoader.prototype.createMesh = function ( model, texturePath, onProgress
 	initPhysics();
 	initGeometry();
 
-	var mesh = new THREE.SkinnedMesh( geometry, material );
+	var mesh = new THREE.SkinnedMesh( geometry, materials );
 
 	// console.log( mesh ); // for console debug
 
