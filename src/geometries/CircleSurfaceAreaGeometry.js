@@ -24,7 +24,7 @@ function CircleSurfaceAreaGeometry( radius, segments, thetaStart, thetaLength, e
 
 CircleSurfaceAreaGeometry.prototype = Object.create( Geometry.prototype );
 CircleSurfaceAreaGeometry.prototype.constructor = CircleSurfaceAreaGeometry;
-
+console.log("asdasdasd");
 /**
  * @author benaadams / https://twitter.com/ben_a_adams
  * @author Mugen87 / https://github.com/Mugen87
