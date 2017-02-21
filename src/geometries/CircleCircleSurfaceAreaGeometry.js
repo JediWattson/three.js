@@ -4,25 +4,26 @@
 
 import { Geometry } from '../core/Geometry';
 
-function CircleGeometry( radius, segments, thetaStart, thetaLength ) {
+function CircleSurfaceAreaGeometry( radius, segments, thetaStart, thetaLength, exponent ) {
 
 	Geometry.call( this );
 
-	this.type = 'CircleGeometry';
+	this.type = 'CircleSurfaceAreaGeometry';
 
 	this.parameters = {
 		radius: radius,
 		segments: segments,
 		thetaStart: thetaStart,
-		thetaLength: thetaLength
+		thetaLength: thetaLength,
+		exponent: exponent
 	};
 
-	this.fromBufferGeometry( new CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) );
+	this.fromBufferGeometry( new CircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, thetaLength, exponent ) );
 
 }
 
-CircleGeometry.prototype = Object.create( Geometry.prototype );
-CircleGeometry.prototype.constructor = CircleGeometry;
+CircleSurfaceAreaGeometry.prototype = Object.create( Geometry.prototype );
+CircleSurfaceAreaGeometry.prototype.constructor = CircleSurfaceAreaGeometry;
 
 /**
  * @author benaadams / https://twitter.com/ben_a_adams
@@ -34,7 +35,7 @@ import { BufferGeometry } from '../core/BufferGeometry';
 import { Vector3 } from '../math/Vector3';
 import { Vector2 } from '../math/Vector2';
 
-function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
+function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, thetaLength, exponent ) {
 
 	BufferGeometry.call( this );
 
@@ -44,7 +45,8 @@ function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
 		radius: radius,
 		segments: segments,
 		thetaStart: thetaStart,
-		thetaLength: thetaLength
+		thetaLength: thetaLength,
+		exponent: exponent
 	};
 
 	radius = radius || 50;
@@ -74,7 +76,7 @@ function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
 
 	for (z = -10; z < 10; z++){	
 		vertex.z = z;
-		radius = z*z;
+		radius = z**exponent + 20;
 		for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
 
 			var segment = thetaStart + s / segments * thetaLength;
