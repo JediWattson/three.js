@@ -4,25 +4,26 @@
 
 import { Geometry } from '../core/Geometry';
 
-function CircleGeometry( radius, segments, thetaStart, thetaLength ) {
+function CircleSurfaceAreaGeometry( radius, segments, thetaStart, thetaLength, exponent ) {
 
 	Geometry.call( this );
 
-	this.type = 'CircleGeometry';
+	this.type = 'CircleSurfaceAreaGeometry';
 
 	this.parameters = {
 		radius: radius,
 		segments: segments,
 		thetaStart: thetaStart,
-		thetaLength: thetaLength
+		thetaLength: thetaLength,
+		exponent: exponent
 	};
 
-	this.fromBufferGeometry( new CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) );
+	this.fromBufferGeometry( new CircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, thetaLength, exponent ) );
 
 }
 
-CircleGeometry.prototype = Object.create( Geometry.prototype );
-CircleGeometry.prototype.constructor = CircleGeometry;
+CircleSurfaceAreaGeometry.prototype = Object.create( Geometry.prototype );
+CircleSurfaceAreaGeometry.prototype.constructor = CircleSurfaceAreaGeometry;
 
 /**
  * @author benaadams / https://twitter.com/ben_a_adams
@@ -34,19 +35,20 @@ import { BufferGeometry } from '../core/BufferGeometry';
 import { Vector3 } from '../math/Vector3';
 import { Vector2 } from '../math/Vector2';
 
-function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
+function CircleCircleSurfaceAreaBufferGeometry( radius, segments, thetaStart, thetaLength, exponent ) {
 
 	BufferGeometry.call( this );
 
-	this.type = 'CircleBufferGeometry';
+	this.type = 'CircleCircleSurfaceAreaBufferGeometry';
 
 	this.parameters = {
 		radius: radius,
 		segments: segments,
 		thetaStart: thetaStart,
-		thetaLength: thetaLength
+		thetaLength: thetaLength,
+		exponent: exponent
 	};
-
+	exponent = 2
 	radius = radius || 50;
 	segments = segments !== undefined ? Math.max( 3, segments ) : 8;
 
@@ -72,28 +74,32 @@ function CircleBufferGeometry( radius, segments, thetaStart, thetaLength ) {
 	normals.push( 0, 0, 1 );
 	uvs.push( 0.5, 0.5 );
 
-	for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
+	for (z = -10; z < 10; z++){	
+		vertex.z = z;
+		radius = z**exponent + 20;
+		for ( s = 0, i = 3; s <= segments; s ++, i += 3 ) {
 
-		var segment = thetaStart + s / segments * thetaLength;
+			var segment = thetaStart + s / segments * thetaLength;
 
-		// vertex
+			// vertex
 
-		vertex.x = radius * Math.cos( segment );
-		vertex.y = radius * Math.sin( segment );
+			vertex.x = radius * Math.cos( segment );
+			vertex.y = radius * Math.sin( segment );
 
-		vertices.push( vertex.x, vertex.y, vertex.z );
+			vertices.push( vertex.x, vertex.y, vertex.z );
 
-		// normal
+			// normal
 
-		normals.push( 0, 0, 1 );
+			normals.push( 0, 0, 1 );
 
-		// uvs
+			// uvs
 
-		uv.x = ( vertices[ i ] / radius + 1 ) / 2;
-		uv.y = ( vertices[ i + 1 ] / radius + 1 ) / 2;
+			uv.x = ( vertices[ i ] / radius + 1 ) / 2;
+			uv.y = ( vertices[ i + 1 ] / radius + 1 ) / 2;
 
-		uvs.push( uv.x, uv.y );
+			uvs.push( uv.x, uv.y );
 
+		}
 	}
 
 	// indices
